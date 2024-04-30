@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
+        /// Creates or updates the specified Network Virtual Appliance Inbound Security
+        /// Rules.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -131,12 +132,16 @@ namespace Microsoft.Azure.Management.Network
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ruleCollectionName");
             }
 
+            if (this.Client.ApiVersion == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+
             if (this.Client.SubscriptionId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
 
-            string apiVersion = "2023-09-01";
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -147,7 +152,6 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("networkVirtualApplianceName", networkVirtualApplianceName);
                 tracingParameters.Add("ruleCollectionName", ruleCollectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
 
                 tracingParameters.Add("parameters", parameters);
 
@@ -164,9 +168,9 @@ namespace Microsoft.Azure.Management.Network
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
 
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
-            if (apiVersion != null)
+            if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
